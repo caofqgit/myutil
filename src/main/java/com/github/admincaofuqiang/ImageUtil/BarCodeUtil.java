@@ -1,7 +1,5 @@
 package com.github.admincaofuqiang.ImageUtil;
 
-import cn.hutool.extra.qrcode.QrCodeUtil;
-import cn.hutool.extra.template.engine.velocity.SimpleStringResourceLoader;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.ObjectUtils;
 import org.krysalis.barcode4j.HumanReadablePlacement;

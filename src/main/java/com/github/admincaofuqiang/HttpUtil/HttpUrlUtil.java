@@ -63,70 +63,52 @@ public class HttpUrlUtil {
     }
 
     public static String doPostJson(String url, String param, Map<String, String> header) {
-        return doPostJsonWhitHeader(url, param, header);
-    }
+        // 结果值
+        StringBuffer rest = new StringBuffer();
+        HttpURLConnection conn = null;
+        OutputStream out = null;
+        BufferedReader br = null;
 
-    public static String doPostJsonWhitHeader(String url, String param, Map<String, String> header) {
-        URL requestUrl = null;
-        if (StringUtils.isBlank(url))
-            throw new RuntimeException("request url is null");
         try {
-            requestUrl = new URL(url);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("request url format error");
-        }
-        HttpURLConnection httpURLConnection = null;
-        InputStream inputStream = null;
-        InputStreamReader inputStreamReader = null;
-        BufferedReader bufferedReader = null;
-        try {
-            httpURLConnection = (HttpURLConnection) requestUrl.openConnection();
-            httpURLConnection.setRequestMethod("POST");
-            httpURLConnection.setDoInput(true);
-            httpURLConnection.setDoOutput(true);
-            httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
-            httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-            httpURLConnection.setRequestProperty("accept", "*/*");
-            httpURLConnection.setRequestProperty("Charset", "UT-8");
-            if (StringUtils.isNoneBlank(param) && JSON.isValid(param)) {
-                byte[] bytes = param.getBytes(StandardCharsets.UTF_8);
-                httpURLConnection.setRequestProperty("Content-Length", String.valueOf(bytes.length));
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                outputStream.write(param.getBytes(StandardCharsets.UTF_8));
-                outputStream.flush();
-                outputStream.close();
-            } else {
-                throw new RuntimeException("request error");
-            }
+            URL restUrl = new URL(url);
+            conn = (HttpURLConnection) restUrl.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Connection", "keep-Alive");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
             if (ObjectUtils.isNotEmpty(header)) {
                 Set<String> key = header.keySet();
                 for (String s : key) {
-                    httpURLConnection.setRequestProperty(s, header.get(s));
+                    conn.setRequestProperty(s, header.get(s));
                 }
             }
-            int responseCode = httpURLConnection.getResponseCode();
-            if (responseCode == 200) {
-                inputStream = httpURLConnection.getInputStream();
-                inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-                bufferedReader = new BufferedReader(inputStreamReader);
-                return bufferedReader.readLine();
-            } else {
-                String responseMessage = httpURLConnection.getResponseMessage();
-                Map<String, Object> map = new HashMap<>();
-                map.put("code", responseCode);
-                map.put("message", responseMessage);
-                return JSON.toJSONString(map);
+            conn.connect();
+            out = conn.getOutputStream();
+            out.write(param.getBytes());
+            out.flush();
+            br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+            String line = null;
+            while (null != (line = br.readLine())) {
+                rest.append(line);
             }
-        } catch (IOException e) {
-            throw new RuntimeException("request errorcls");
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             try {
-                bufferedReader.close();
-                inputStreamReader.close();
-                inputStream.close();
-            } catch (IOException ignored) {
+                if (br != null) {
+                    br.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+                if (conn != null) {
+                    conn.disconnect();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
             }
         }
-
+        return rest.toString();
     }
 }
