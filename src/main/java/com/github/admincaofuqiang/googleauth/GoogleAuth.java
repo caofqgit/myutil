@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import java.security.SecureRandom;
 
 public class GoogleAuth {
+    //随机产生一组秘钥 秘钥内容随机
     public static String createSecretKey() {
         SecureRandom random = new SecureRandom();
         byte[] bytes = new byte[20];
@@ -35,8 +36,8 @@ public class GoogleAuth {
      * Google Authenticator 约定的二维码信息格式 : otpauth://totp/{issuer}:{account}?secret={secret}&issuer={issuer}
      * 参数需要 url 编码 + 号需要替换成 %20
      * @param secret  密钥 使用 createSecretKey 方法生成
-     * @param account 用户账户 如: example@domain.com 138XXXXXXXX
-     * @param issuer  服务名称 如: Google Github 印象笔记
+     * @param account 用户账户 如: 当前认证主体的登录名称 需确保全平台唯一
+     * @param issuer  服务名称 如: 项目名称 就是这个令牌生成以后给哪个应用使用的名字可以随便 不做要求
      */
     public static String createGoogleAuthQRCodeData(String secret, String account, String issuer) {
         String qrCodeData = "otpauth://totp/%s?secret=%s&issuer=%s";
@@ -53,7 +54,7 @@ public class GoogleAuth {
     /**
      * 校验方法
      * @param secretKey 密钥
-     * @param code      用户输入的 TOTP 验证码
+     * @param code      用户输入的令牌密码 与用户的密文校验是否正确
      */
     public static boolean verify(String secretKey, String code) {
         long time = System.currentTimeMillis() / 1000 / 30;
