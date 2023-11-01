@@ -1,4 +1,4 @@
-package com.github.admincaofuqiang.ImageUtil;
+package com.github.admincaofuqiang.imageutil;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.ObjectUtils;

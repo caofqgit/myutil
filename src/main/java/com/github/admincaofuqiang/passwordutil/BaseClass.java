@@ -1,4 +1,4 @@
-package com.github.admincaofuqiang.PasswordUtil;
+package com.github.admincaofuqiang.passwordutil;
 
 import com.beust.jcommander.internal.Maps;
 import org.apache.commons.codec.binary.Base64;

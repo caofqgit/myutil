@@ -6,11 +6,11 @@
 
     <groupId>com.github.admincaofuqiang</groupId>
     <artifactId>myutil</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <name>myutil</name>
     <description>this is a project</description>
-    <url>http://www.example.com</url>
+    <url>http://www.weibo.com/caofuqiang</url>
 
     <!--licenses信息-->
 
@@ -32,7 +32,7 @@
     <developers>
         <developer>
             <name>caofuqiang</name>
-            <email>caofuqiangmail@163.com</email>
+            <email>cfqmail@gmail.com</email>
             <organization>https://github.com/caofqgit</organization>
             <organizationUrl>https://github.com/caofqgit</organizationUrl>
         </developer>
@@ -102,6 +102,17 @@
             <groupId>de.taimos</groupId>
             <artifactId>totp</artifactId>
             <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>5.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
         </dependency>
 
     </dependencies>

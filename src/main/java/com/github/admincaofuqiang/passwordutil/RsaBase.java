@@ -1,4 +1,4 @@
-package com.github.admincaofuqiang.PasswordUtil;
+package com.github.admincaofuqiang.passwordutil;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;

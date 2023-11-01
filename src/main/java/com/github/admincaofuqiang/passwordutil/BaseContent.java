@@ -1,4 +1,4 @@
-package com.github.admincaofuqiang.PasswordUtil;
+package com.github.admincaofuqiang.passwordutil;
 
 public class BaseContent {
     public final static String KEY_RSA = "RSA";

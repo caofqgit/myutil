@@ -1,4 +1,4 @@
-package com.github.admincaofuqiang.ImageUtil;
+package com.github.admincaofuqiang.imageutil;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;

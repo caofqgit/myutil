@@ -1,4 +1,4 @@
-package com.github.admincaofuqiang.HttpUtil;
+package com.github.admincaofuqiang.httputil;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.ObjectUtils;
